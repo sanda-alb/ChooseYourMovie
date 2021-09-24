@@ -6,12 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.chooseyourmovie.R
 import com.example.chooseyourmovie.databinding.OverviewFragmentBinding
 
 class OverviewFragment : Fragment() {
 
-    val viewModel: OverviewViewModel by lazy {
+    private val viewModel: OverviewViewModel by lazy {
         ViewModelProvider(this).get(OverviewViewModel::class.java)
     }
 
@@ -28,8 +27,9 @@ class OverviewFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
-
+        binding.moviesGrid.adapter = PosterGridAdapter()
         setHasOptionsMenu(true)
+
         return binding.root
 
     }
