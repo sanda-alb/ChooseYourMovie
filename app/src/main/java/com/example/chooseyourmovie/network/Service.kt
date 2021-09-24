@@ -12,4 +12,11 @@ interface MovieApiService {
 //        @Query("page") page: Int
     ): MovieApiResponse
 
+
+    @GET("3/movie/popular")
+    suspend fun getPopularMoviesPaged(
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int)
+    : MovieApiResponse
+
 }
