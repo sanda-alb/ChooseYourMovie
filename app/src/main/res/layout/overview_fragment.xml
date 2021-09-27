@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.chooseyourmovie.ui.overview.OverviewViewModel" />
+            type="com.example.chooseyourmovie.ui.overview.RemoteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_grid"
-            app:listData="@{viewModel.movieList}"
+
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="6dp"

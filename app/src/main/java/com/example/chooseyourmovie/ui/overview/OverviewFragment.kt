@@ -6,31 +6,58 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
+import androidx.recyclerview.widget.RecyclerView
+import com.example.chooseyourmovie.R
 import com.example.chooseyourmovie.databinding.OverviewFragmentBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
+@ExperimentalPagingApi
 class OverviewFragment : Fragment() {
 
-    private val viewModel: OverviewViewModel by lazy {
-        ViewModelProvider(this).get(OverviewViewModel::class.java)
+    private var adapter = RemoteMovieAdapter()
+    lateinit var recyclerView: RecyclerView
+
+    @ExperimentalPagingApi
+    private val remoteViewModel: RemoteViewModel by lazy {
+        ViewModelProvider(this).get(RemoteViewModel::class.java)
     }
 
+    @ExperimentalPagingApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         val binding = OverviewFragmentBinding.inflate(inflater)
+        binding.moviesGrid.adapter = RemoteMovieAdapter()
 
-        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
-        binding.lifecycleOwner = this
-
-        // Giving the binding access to the OverviewViewModel
-        binding.viewModel = viewModel
-
-        binding.moviesGrid.adapter = PosterGridAdapter()
         setHasOptionsMenu(true)
 
-        return binding.root
+        fetchMoviesPosters()
 
+        view?.let { setUpViews(it) }
+
+        return binding.root
     }
+
+
+    private fun fetchMoviesPosters() {
+        lifecycleScope.launch {
+            remoteViewModel.fetchMoviesPosters().distinctUntilChanged().collectLatest {
+                adapter.submitData(it)
+            }
+        }
+    }
+
+
+
+    private fun setUpViews(view: View) {
+        recyclerView = view.findViewById(R.id.movies_grid)
+        recyclerView.adapter = adapter
+    }
+
 }

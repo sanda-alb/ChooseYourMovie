@@ -23,17 +23,11 @@ class RemoteViewModel(
      * function you can always return the original model if needed, in our case it would be [Movie]
      */
 
-    fun fetchMoviePosters(): Flow<PagingData<Movie>> {
+    fun fetchMoviesPosters(): Flow<PagingData<Movie>> {
         return repository.letMoviesFlow()
 //            .cachedIn(viewModelScope)
     }
 
 
-    //live data use case
-    fun fetchDoggoImagesLiveData(): LiveData<PagingData<String>> {
-        return repository.letMoviesLiveData()
-            .map { it.map{it.posterLink} }
-            .cachedIn(viewModelScope)
-    }
 }
 
