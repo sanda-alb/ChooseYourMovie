@@ -22,6 +22,8 @@ class PosterGridAdapter() : ListAdapter<Movie,
         )
     }
 
+
+
     override fun onBindViewHolder(holder: PosterGridAdapter.MovieViewHolder, position: Int) {
         val movie = getItem(position)
 //        holder.itemView.setOnClickListener{

@@ -10,7 +10,7 @@ import com.example.mymovieapp.network.MovieApiService
 import retrofit2.HttpException
 import java.io.IOException
 
-class MoviePagingSource(
+class MoviesPagingSource(
     private val myRetrofitService: MovieApiService
 ) : PagingSource<Int, Movie>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
