@@ -33,13 +33,14 @@ class OverviewFragment : Fragment() {
     ): View? {
 
         val binding = OverviewFragmentBinding.inflate(inflater)
-        binding.moviesGrid.adapter = RemoteMovieAdapter()
-
-        setHasOptionsMenu(true)
-
         fetchMoviesPosters()
+        binding.moviesGrid.adapter = adapter
 
-        view?.let { setUpViews(it) }
+//        setHasOptionsMenu(true)
+
+
+
+//        container?.let { setUpViews(it) }
 
         return binding.root
     }

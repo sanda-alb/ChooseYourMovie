@@ -24,6 +24,10 @@ class MoviesRepository {
         ).flow
     }
 
+    val movies: Flow<PagingData<Movie>> = Pager(config = PagingConfig(pageSize = 20, prefetchDistance = 2),
+        pagingSourceFactory = { MoviesPagingSource(movieApiService)}
+    ).flow
+
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = false)
     }

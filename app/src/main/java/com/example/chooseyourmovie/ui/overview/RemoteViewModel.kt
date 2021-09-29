@@ -24,8 +24,7 @@ class RemoteViewModel(
      */
 
     fun fetchMoviesPosters(): Flow<PagingData<Movie>> {
-        return repository.letMoviesFlow()
-//            .cachedIn(viewModelScope)
+        return repository.letMoviesFlow().cachedIn(viewModelScope)
     }
 
 
