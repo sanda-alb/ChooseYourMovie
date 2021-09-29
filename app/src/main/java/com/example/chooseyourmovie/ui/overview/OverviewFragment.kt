@@ -49,10 +49,4 @@ class OverviewFragment : Fragment() {
     }
 
 
-
-    private fun setUpViews(view: View) {
-        recyclerView = view.findViewById(R.id.movies_grid)
-        recyclerView.adapter = adapter
-    }
-
 }

@@ -44,10 +44,7 @@ class RemoteMovieAdapter() : PagingDataAdapter<Movie,
 
     override fun onBindViewHolder(holder: MoviePosterViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
-//        val movie = getItem(position)
-//        if (movie != null) {
-//            holder.bind(movie)
-//        }
+
     }
 
 }

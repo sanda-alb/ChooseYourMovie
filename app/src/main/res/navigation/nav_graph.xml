@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/overviewFragment"
         android:name="com.example.chooseyourmovie.ui.overview.OverviewFragment"
-        android:label="OverviewFragment" />
+        android:label="OverviewFragment" >
+        <action
+            android:id="@+id/action_showDetail"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.chooseyourmovie.ui.detail.DetailFragment"
+        android:label="DetailFragment">
+        <argument
+            android:name="selectedMovie"
+            app:argType="com.example.chooseyourmovie.models.Movie" />
+    </fragment>
 </navigation>
