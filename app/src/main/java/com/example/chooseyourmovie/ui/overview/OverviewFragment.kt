@@ -36,12 +36,6 @@ class OverviewFragment : Fragment() {
         fetchMoviesPosters()
         binding.moviesGrid.adapter = adapter
 
-//        setHasOptionsMenu(true)
-
-
-
-//        container?.let { setUpViews(it) }
-
         return binding.root
     }
 
