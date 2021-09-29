@@ -33,6 +33,7 @@ class OverviewFragment : Fragment() {
     ): View? {
 
         val binding = OverviewFragmentBinding.inflate(inflater)
+
         fetchMoviesPosters()
         binding.moviesGrid.adapter = adapter
 
