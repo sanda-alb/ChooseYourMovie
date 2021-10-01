@@ -4,17 +4,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.PagingData
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.chooseyourmovie.models.Movie
-import com.example.chooseyourmovie.ui.overview.RemoteMovieAdapter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
-
+import com.bumptech.glide.request.RequestOptions
+import com.example.chooseyourmovie.R
 
 @BindingAdapter("posterUrl")
 fun bindImage(imgView: ImageView, posterPath: String) {
@@ -22,6 +14,10 @@ fun bindImage(imgView: ImageView, posterPath: String) {
         val posterUri = posterPath.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)
             .load(posterUri)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_baseline_broken_image))
             .into(imgView)
     }
 }
@@ -47,19 +43,3 @@ fun doubleToString(txtView: TextView, voteAverage: Double) {
     txtView.text = voteAverage.toString()
 }
 
-
-//
-//@BindingAdapter("listData")
-//suspend fun bindRecyclerView(recyclerView: RecyclerView,
-//                             data: Flow<PagingData<Movie>>
-//) {
-//    val adapter = recyclerView.adapter as RemoteMovieAdapter
-//    adapter.submitData(data)
-
-
-//private fun fetchMoviesPosters() {
-//    lifecycleScope.launch {
-//        remoteViewModel.fetchMoviesPosters().distinctUntilChanged().collectLatest {
-//            adapter.submitData(it)
-//        }
-//    }
