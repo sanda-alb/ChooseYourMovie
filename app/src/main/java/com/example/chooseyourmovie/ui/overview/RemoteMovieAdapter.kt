@@ -19,7 +19,7 @@ val USER_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
     }
 }
 
-class RemoteMovieAdapter() : PagingDataAdapter<Movie,
+class RemoteMovieAdapter(private val onClickListener: OnClickListener) : PagingDataAdapter<Movie,
         RemoteMovieAdapter.MoviePosterViewHolder>(USER_COMPARATOR) {
 
     override fun onCreateViewHolder(
@@ -43,8 +43,22 @@ class RemoteMovieAdapter() : PagingDataAdapter<Movie,
     }
 
     override fun onBindViewHolder(holder: MoviePosterViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+        val movie = getItem(position)
+        holder.itemView.setOnClickListener{
+            if (movie != null) {
+                onClickListener.onClick(movie)
+            }
+        }
+        if (movie != null) {
+            holder.bind(movie)
+        }
+//        getItem(position)?.let { holder.bind(it) }
 
     }
+
+    class OnClickListener(val clickListener: (movie: Movie) -> Unit) {
+        fun onClick(movie: Movie) = clickListener(movie)
+    }
+
 
 }

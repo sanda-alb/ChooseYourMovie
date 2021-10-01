@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
-import androidx.recyclerview.widget.RecyclerView
-import com.example.chooseyourmovie.R
 import com.example.chooseyourmovie.databinding.OverviewFragmentBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -18,13 +18,10 @@ import kotlinx.coroutines.launch
 @ExperimentalPagingApi
 class OverviewFragment : Fragment() {
 
-    private var adapter = RemoteMovieAdapter()
-    lateinit var recyclerView: RecyclerView
-
-    @ExperimentalPagingApi
-    private val remoteViewModel: RemoteViewModel by lazy {
+    val viewModel: RemoteViewModel by lazy {
         ViewModelProvider(this).get(RemoteViewModel::class.java)
     }
+
 
     @ExperimentalPagingApi
     override fun onCreateView(
@@ -34,20 +31,29 @@ class OverviewFragment : Fragment() {
 
         val binding = OverviewFragmentBinding.inflate(inflater)
 
-        fetchMoviesPosters()
-        binding.moviesGrid.adapter = adapter
+        binding.moviesGrid.adapter = RemoteMovieAdapter(RemoteMovieAdapter.OnClickListener{
+            viewModel.displayMovieDetails(it)
+        })
+        
+        binding.viewModel = viewModel
 
-        return binding.root
-    }
+        val adapter = binding.moviesGrid.adapter as RemoteMovieAdapter
 
-
-    private fun fetchMoviesPosters() {
         lifecycleScope.launch {
-            remoteViewModel.fetchMoviesPosters().distinctUntilChanged().collectLatest {
+            viewModel.fetchMoviesPosters().distinctUntilChanged().collectLatest {
                 adapter.submitData(it)
             }
         }
+
+        viewModel.navigateToSelectedMovie.observe(viewLifecycleOwner, Observer {
+            if (null != it) {
+                this.findNavController().navigate(
+                    OverviewFragmentDirections.actionShowDetail(it))
+                viewModel.displayMovieDetailsComplete()
+            }
+        })
+
+        setHasOptionsMenu(true)
+        return binding.root
     }
-
-
 }
