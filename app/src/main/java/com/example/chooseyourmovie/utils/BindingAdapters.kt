@@ -14,10 +14,10 @@ fun bindImage(imgView: ImageView, posterPath: String) {
         val posterUri = posterPath.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)
             .load(posterUri)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_baseline_broken_image))
+//            .apply(
+//                RequestOptions()
+//                    .placeholder(R.drawable.loading_animation)
+//                    .error(R.drawable.ic_baseline_broken_image))
             .into(imgView)
     }
 }
