@@ -8,7 +8,7 @@ data class DatabaseMovie(
     val id: Int,
     val overview: String,
     val posterPath: String,
-    val releaseDate: String,
+    val releaseDate: String?,
     val title: String,
     val voteAverage: Double,
     var posterLink: String = BASE_POSTER_URL + posterPath)
