@@ -28,8 +28,6 @@ class RemoteViewModel(
         return repository.letMoviesFlow().cachedIn(viewModelScope)
     }
 
-
-
     fun displayMovieDetails(movie: Movie) {
         _navigateToSelectedMovie.value = movie
     }

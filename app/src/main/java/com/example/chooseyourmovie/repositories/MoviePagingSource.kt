@@ -55,4 +55,5 @@ class MoviesPagingSource(
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
         }
     }
+    override val keyReuseSupported: Boolean = true
 }

@@ -9,20 +9,20 @@ import com.example.chooseyourmovie.models.MovieApiResponse
  * Convert Network results to database objects
  */
 
-fun MovieApiResponse.asDataBaseModel(): List<DatabaseMovie> {
-    return results.map {
-        DatabaseMovie(
-            genreIds = it.genreIds,
-            id = it.id,
-            overview = it.overview,
-            posterPath = it.posterPath,
-            releaseDate = it.releaseDate,
-            title = it.title,
-            voteAverage = it.voteAverage,
-            posterLink = BASE_POSTER_URL + it.posterPath
-        )
-    }
-}
+//fun MovieApiResponse.asDataBaseModel(): List<DatabaseMovie> {
+//    return results.map {
+//        DatabaseMovie(
+//            genreIds = it.genreIds,
+//            id = it.id,
+//            overview = it.overview,
+//            posterPath = it.posterPath,
+//            releaseDate = it.releaseDate,
+//            title = it.title,
+//            voteAverage = it.voteAverage,
+//            posterLink = BASE_POSTER_URL + it.posterPath
+//        )
+//    }
+//}
 
 /**
  * Map Network results  to domain models

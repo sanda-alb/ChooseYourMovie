@@ -19,14 +19,12 @@ val USER_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
     }
 }
 
-class RemoteMovieAdapter(private val onClickListener: OnClickListener) : PagingDataAdapter<Movie,
-        RemoteMovieAdapter.MoviePosterViewHolder>(USER_COMPARATOR) {
-
+class RemoteMovieAdapter(private val onClickListener: OnClickListener) :
+    PagingDataAdapter<Movie, RemoteMovieAdapter.MoviePosterViewHolder>(USER_COMPARATOR) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    )
-            : MoviePosterViewHolder {
+    ): MoviePosterViewHolder {
         return MoviePosterViewHolder(
             MovieGridBinding.inflate(
                 LayoutInflater.from(parent.context)
@@ -36,29 +34,26 @@ class RemoteMovieAdapter(private val onClickListener: OnClickListener) : PagingD
 
     inner class MoviePosterViewHolder(private val binding: MovieGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie) {
-            binding.movie = movie
+        fun bind(movie: Movie?) {
+            if (movie != null) {
+                binding.movie = movie
+            }
             binding.executePendingBindings()
         }
     }
 
     override fun onBindViewHolder(holder: MoviePosterViewHolder, position: Int) {
         val movie = getItem(position)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             if (movie != null) {
                 onClickListener.onClick(movie)
             }
         }
-        if (movie != null) {
-            holder.bind(movie)
-        }
-//        getItem(position)?.let { holder.bind(it) }
 
+        holder.bind(movie)
     }
 
     class OnClickListener(val clickListener: (movie: Movie) -> Unit) {
         fun onClick(movie: Movie) = clickListener(movie)
     }
-
-
 }

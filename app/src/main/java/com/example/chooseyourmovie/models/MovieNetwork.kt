@@ -11,7 +11,7 @@ data class MovieNetwork(
     val adult: Boolean,
 
     @Json(name = "backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
 
     @Json(name = "genre_ids")
     val genreIds: List<Int>,
