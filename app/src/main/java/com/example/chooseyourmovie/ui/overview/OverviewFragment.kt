@@ -1,5 +1,6 @@
 package com.example.chooseyourmovie.ui.overview
 
+
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.example.chooseyourmovie.databinding.OverviewFragmentBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import com.example.chooseyourmovie.ui.loader.LoaderStateAdapter
 
 @ExperimentalPagingApi
 class OverviewFragment : Fragment() {
@@ -22,22 +24,24 @@ class OverviewFragment : Fragment() {
         ViewModelProvider(this).get(RemoteViewModel::class.java)
     }
 
-
     @ExperimentalPagingApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = OverviewFragmentBinding.inflate(inflater)
 
-        binding.moviesGrid.adapter = RemoteMovieAdapter(RemoteMovieAdapter.OnClickListener{
+
+        var adapter = RemoteMovieAdapter(RemoteMovieAdapter.OnClickListener{
             viewModel.displayMovieDetails(it)
         })
-        
-        binding.viewModel = viewModel
 
-        val adapter = binding.moviesGrid.adapter as RemoteMovieAdapter
+        val loaderStateAdapter = LoaderStateAdapter { adapter.retry() }
+        val combineAdapter = adapter.withLoadStateFooter(loaderStateAdapter)
+
+        val binding = OverviewFragmentBinding.inflate(inflater)
+        binding.viewModel = viewModel
+        binding.moviesGrid.adapter = combineAdapter
 
         lifecycleScope.launch {
             viewModel.fetchMoviesPosters().distinctUntilChanged().collectLatest {
