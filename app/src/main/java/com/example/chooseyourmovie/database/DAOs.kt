@@ -3,7 +3,6 @@ package com.example.chooseyourmovie.database
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.chooseyourmovie.models.DatabaseMovie
@@ -12,13 +11,13 @@ import com.example.chooseyourmovie.models.Movie
 @Dao
 interface MovieDao {
 
-    @Query("select * from databasemovie")
+    @Query("select * from moviedatabase")
     fun getMovies(): PagingSource<Int, Movie>
 
     @Insert(onConflict = REPLACE)
-    fun insertAll(movies: List<DatabaseMovie>)
+    fun insertAll(movies: List<Movie>)
 
-    @Query("DELETE FROM databasemovie")
+    @Query("DELETE FROM moviedatabase")
     suspend fun clearAllMovies()
 
 }

@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 import com.example.chooseyourmovie.BASE_POSTER_URL
 import kotlinx.parcelize.Parcelize
 
-@Entity
+
 @Parcelize
+@Entity(tableName = "moviedatabase")
 data class Movie(
 
     @PrimaryKey

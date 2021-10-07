@@ -27,6 +27,10 @@ class RemoteViewModel(application: Application) : AndroidViewModel(application) 
         return repository.letMoviesFlow().cachedIn(viewModelScope)
     }
 
+    fun fetchMoviesPostersDB(): Flow<PagingData<Movie>> {
+        return repository.letMoviesFlowDb().cachedIn(viewModelScope)
+    }
+
     fun displayMovieDetails(movie: Movie) {
         _navigateToSelectedMovie.value = movie
     }

@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.chooseyourmovie.models.DatabaseMovie
+import com.example.chooseyourmovie.models.Movie
 
 
 @Database(
-    entities = [DatabaseMovie::class, RemoteKeys::class],
+    entities = [Movie::class, RemoteKeys::class],
     version = 1,
     exportSchema = false
 )
@@ -47,23 +47,4 @@ abstract class MovieDatabase : RoomDatabase() {
 
 
 
-
-//
-//@Database(
-//    entities = [RedditPost::class, RedditKeys::class],
-//    version = 1,
-//    exportSchema = false
-//)
-//abstract class RedditDatabase : RoomDatabase() {
-//    companion object {
-//        fun create(context: Context): RedditDatabase {
-//            val databaseBuilder =
-//                Room.databaseBuilder(context, RedditDatabase::class.java, "redditclone.db")
-//            return databaseBuilder.build()
-//        }
-//    }
-//
-//    abstract fun redditPostsDao(): RedditPostsDao
-//    abstract fun redditKeysDao(): RedditKeysDao
-//}
 

@@ -8,6 +8,7 @@ import androidx.room.withTransaction
 import com.example.chooseyourmovie.API_KEY
 import com.example.chooseyourmovie.DEFAULT_PAGE_INDEX
 import com.example.chooseyourmovie.Mapper.asDataBaseModel
+import com.example.chooseyourmovie.Mapper.asDomainModel
 import com.example.chooseyourmovie.database.MovieDatabase
 import com.example.chooseyourmovie.database.RemoteKeys
 import com.example.chooseyourmovie.models.Movie
@@ -54,7 +55,7 @@ class MovieRemoteMediator(
                     RemoteKeys(repoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 movieDatabase.getKeysDao().insertAll(keys)
-                movieDatabase.getMovieDao().insertAll(response.asDataBaseModel())
+                movieDatabase.getMovieDao().insertAll(response.asDomainModel())
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)
         } catch (exception: IOException) {
