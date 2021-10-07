@@ -1,28 +1,19 @@
 package com.example.chooseyourmovie.repositories
 
 
+import android.content.Context
 import androidx.paging.*
 import com.example.chooseyourmovie.DEFAULT_PAGE_SIZE
-import com.example.chooseyourmovie.MovieApplication
 import com.example.chooseyourmovie.database.MovieDatabase
 import com.example.chooseyourmovie.models.Movie
 import com.example.chooseyourmovie.network.MovieApi
 import kotlinx.coroutines.flow.Flow
 
 @ExperimentalPagingApi
-class MoviesRepository{
-
-
-    companion object {
-
-        fun getInstance() = MoviesRepository()
-    }
+class MoviesRepository(context: Context){
 
     private val movieApiService = MovieApi.retrofitService
-    private val movieDatabase: MovieDatabase
-        get() {
-            TODO()
-        }
+    private val movieDatabase: MovieDatabase = MovieDatabase.getDatabase(context)
 
     fun letMoviesFlow(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<Movie>> {
         return Pager(
@@ -37,14 +28,14 @@ class MoviesRepository{
     }
 
 
-//    fun letMoviesFlowDb(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<Movie>> {
-//        if (movieDatabase == null) throw IllegalStateException("Database is not initialized")
-//
-//        val pagingSourceFactory = { movieDatabase.getMovieDao().getMovies() }
-//        return Pager(
-//            config = pagingConfig,
-//            pagingSourceFactory = pagingSourceFactory,
-//            remoteMediator = MovieRemoteMediator(movieApiService, MovieApplication(), movieDatabase)
-//        ).flow
-//    }
+    fun letMoviesFlowDb(pagingConfig: PagingConfig = getDefaultPageConfig()): Flow<PagingData<Movie>> {
+        if (movieDatabase == null) throw IllegalStateException("Database is not initialized")
+
+        val pagingSourceFactory = { movieDatabase.getMovieDao().getMovies() }
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = pagingSourceFactory,
+            remoteMediator = MovieRemoteMediator(movieApiService, movieDatabase)
+        ).flow
+    }
 }

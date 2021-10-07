@@ -14,17 +14,13 @@ import com.example.chooseyourmovie.models.Movie
 import retrofit2.HttpException
 import java.io.IOException
 import java.io.InvalidObjectException
-import com.example.chooseyourmovie.Mapper.asDomainModel
 import com.example.chooseyourmovie.network.MovieApiService
-import com.example.chooseyourmovie.MovieApplication
-
 
 
 @OptIn(ExperimentalPagingApi::class)
 class MovieRemoteMediator(
     private val movieApiService: MovieApiService,
-    private val application: MovieApplication,
-    private val movieDatabase: MovieDatabase = application.database
+    private val movieDatabase: MovieDatabase
 ) : RemoteMediator<Int, Movie>() {
 
 

@@ -1,5 +1,6 @@
 package com.example.chooseyourmovie.ui.overview
 
+import android.app.Application
 import androidx.lifecycle.*
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
@@ -11,11 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @ExperimentalPagingApi
-class RemoteViewModel(
-    private val repository: MoviesRepository = MoviesRepository.getInstance()
-) : ViewModel() {
-
-    private val _navigateToSelectedMovie= MutableLiveData<Movie?>()
+class RemoteViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: MoviesRepository = MoviesRepository(application)
+    private val _navigateToSelectedMovie = MutableLiveData<Movie?>()
     val navigateToSelectedMovie: LiveData<Movie?>
         get() = _navigateToSelectedMovie
 
@@ -31,6 +30,7 @@ class RemoteViewModel(
     fun displayMovieDetails(movie: Movie) {
         _navigateToSelectedMovie.value = movie
     }
+
     fun displayMovieDetailsComplete() {
         _navigateToSelectedMovie.value = null
     }
