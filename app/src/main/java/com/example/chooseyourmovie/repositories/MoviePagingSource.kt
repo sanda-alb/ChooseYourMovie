@@ -6,7 +6,7 @@ import com.example.chooseyourmovie.API_KEY
 import com.example.chooseyourmovie.DEFAULT_PAGE_INDEX
 import com.example.chooseyourmovie.Mapper.asDomainModel
 import com.example.chooseyourmovie.models.Movie
-import com.example.mymovieapp.network.MovieApiService
+import com.example.chooseyourmovie.network.MovieApiService
 import retrofit2.HttpException
 import java.io.IOException
 
